@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const societiesList = [
   "IEEE Student Branch SREC",
@@ -18,7 +19,8 @@ const societiesList = [
 ];
 
 const JoinPage = () => {
-    const [firstName, setFirstName] = useState("");
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
@@ -70,7 +72,7 @@ const JoinPage = () => {
       if (error) throw error;
       
       setIsSubmitted(true);
-      setTimeout(() => window.location.href = "/", 3500);
+      setTimeout(() => navigate("/"), 3500);
     } catch (error: any) {
       toast({
         title: "Submission Error",

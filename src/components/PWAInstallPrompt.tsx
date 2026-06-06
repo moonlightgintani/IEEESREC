@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Download, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Capacitor } from "@capacitor/core";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: Array<string>;
@@ -17,6 +18,11 @@ const PWAInstallPrompt = () => {
   const [isAndroid, setIsAndroid] = useState(false);
 
   useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      setIsVisible(false);
+      return;
+    }
+
     const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
     const isAndroidDevice = /android/i.test(userAgent);
     setIsAndroid(isAndroidDevice);
