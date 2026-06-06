@@ -51,7 +51,7 @@ const Navbar = () => {
          <div className="w-full flex flex-col items-center justify-center">
             
             {/* Mobile Hamburger Icon (Always visible on mobile right corner) */}
-            <div className={`xl:hidden absolute right-4 md:right-10 flex items-center z-[70] transition-all duration-1000 ${hideLogos ? 'top-1/2 -translate-y-1/2' : 'top-5 md:top-6'}`}>
+            <div className={`xl:hidden absolute right-4 md:right-10 flex items-center z-[70] transition-all duration-1000 ${hideLogos ? 'top-1/2 -translate-y-1/2' : 'top-1/2 -translate-y-1/2'}`}>
                <button 
                   onClick={() => setOpen(true)}
                   className="p-2 rounded-xl transition-all shadow-md bg-[#002855] text-white hover:bg-[#001f42] active:scale-95"
@@ -71,15 +71,15 @@ const Navbar = () => {
                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                className="w-full bg-white origin-top relative z-50 overflow-hidden shadow-md"
             >
-               <div className="grid grid-cols-3 items-center w-full pl-4 pr-16 xl:px-12 py-3 md:py-4 gap-2 md:gap-4">
-                  <div className="flex justify-start">
-                     <img src={srecLogo} alt="SREC" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+               <div className="grid grid-cols-3 items-center w-full px-12 sm:px-16 xl:px-24 py-3 md:py-4 gap-4 md:gap-8">
+                  <div className="flex justify-center items-center">
+                     <img src={srecLogo} alt="SREC" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
-                  <div className="flex justify-center">
-                     <img src={ieeeLogo} alt="IEEE" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+                  <div className="flex justify-center items-center">
+                     <img src={ieeeLogo} alt="IEEE" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
-                  <div className="flex justify-end">
-                     <img src={snrLogo} alt="SNR Trust" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+                  <div className="flex justify-center items-center">
+                     <img src={snrLogo} alt="SNR Trust" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
                </div>
             </motion.div>
@@ -116,7 +116,7 @@ const Navbar = () => {
 
       {/* Global Transparent Spacer for Subpages to prevent content clipping under the tall fixed navbar */}
       {!isHomePage && (
-         <div className="h-[120px] md:h-[160px] w-full bg-transparent pointer-events-none" aria-hidden="true"></div>
+         <div className="h-[140px] sm:h-[160px] md:h-[200px] lg:h-[240px] w-full bg-transparent pointer-events-none" aria-hidden="true"></div>
       )}
 
       {/* Mobile Sidebar/Dropdown Menu */}
