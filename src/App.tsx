@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Capacitor } from "@capacitor/core";
 
 import Index from "./pages/Index";
 import OfficeBearersPage from "./pages/OfficeBearersPage";
@@ -37,48 +38,51 @@ import ReportsPage from "./pages/ReportsPage.tsx";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <SpeedInsights />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/activities" element={<ActivitiesPage />} />
-          <Route path="/Team" element={<TeamPage />} />
-          <Route path="/office-bearers" element={<OfficeBearersPage />} />
-          <Route path="/members" element={<MembersPage />} />
-          <Route path="/senior-members" element={<SeniorMembersPage />} />
-          <Route path="/awards" element={<AwardsPage />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/annual-plans" element={<AnnualPlansPage />} />
-          <Route path="/funding" element={<FundingsPlanPage />} />
-          <Route path="/societies" element={<SocietiesPage />} />
-          <Route path="/societies/srec" element={<SrecBranchPage />} />
-          <Route path="/societies/wie" element={<WiePage />} />
-          <Route path="/societies/embs" element={<EmbsPage />} />
-          <Route path="/societies/cs" element={<CsPage />} />
-          <Route path="/societies/comsoc" element={<ComsocPage />} />
-          <Route path="/societies/pels" element={<PelsPage />} />
-          <Route path="/societies/im" element={<ImPage />} />
-          <Route path="/societies/cis" element={<CisPage />} />
-          <Route path="/join" element={<JoinPage />} />
-          <Route path="/societies/:id" element={<SocietyDetailPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/admin-login" element={<AdminLoginPage />} />
-          <Route path="/admin/*" element={<AdminDashboardRoute />} />
-          
+const App = () => {
+  // Use HashRouter for native app platforms to prevent WebView routing failures,
+  // and BrowserRouter for web platforms (like Vercel) to maintain clean URLs.
+  const RouterComponent = Capacitor.isNativePlatform() ? HashRouter : BrowserRouter;
 
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <SpeedInsights />
+        <RouterComponent>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/activities" element={<ActivitiesPage />} />
+            <Route path="/Team" element={<TeamPage />} />
+            <Route path="/office-bearers" element={<OfficeBearersPage />} />
+            <Route path="/members" element={<MembersPage />} />
+            <Route path="/senior-members" element={<SeniorMembersPage />} />
+            <Route path="/awards" element={<AwardsPage />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/annual-plans" element={<AnnualPlansPage />} />
+            <Route path="/funding" element={<FundingsPlanPage />} />
+            <Route path="/societies" element={<SocietiesPage />} />
+            <Route path="/societies/srec" element={<SrecBranchPage />} />
+            <Route path="/societies/wie" element={<WiePage />} />
+            <Route path="/societies/embs" element={<EmbsPage />} />
+            <Route path="/societies/cs" element={<CsPage />} />
+            <Route path="/societies/comsoc" element={<ComsocPage />} />
+            <Route path="/societies/pels" element={<PelsPage />} />
+            <Route path="/societies/im" element={<ImPage />} />
+            <Route path="/societies/cis" element={<CisPage />} />
+            <Route path="/join" element={<JoinPage />} />
+            <Route path="/societies/:id" element={<SocietyDetailPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin-login" element={<AdminLoginPage />} />
+            <Route path="/admin/*" element={<AdminDashboardRoute />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </RouterComponent>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

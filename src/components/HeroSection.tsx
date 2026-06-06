@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import img1 from "@/assets/gallery/Display/IMG20251015134912.jpg";
-import img2 from "@/assets/gallery/Display/IMG20251015144015.jpg";
-import img3 from "@/assets/gallery/Display/PXL_20250917_055007090.jpg";
+import img1 from "@/assets/gallery/Display/PXL_20250917_055007090.jpg";
 
-const images = [img1, img2, img3];
+const images = [img1];
 
 const HeroSection = () => {
    const [currentIndex, setCurrentIndex] = useState(0);
