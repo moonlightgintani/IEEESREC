@@ -49,7 +49,7 @@ const UpcomingMegaEvent = () => {
 
   return (
     <section className="py-24 bg-slate-900 relative overflow-hidden text-white border-y border-slate-800">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
       
       {/* Heavy Light Beams */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-cyan-500/20 blur-[120px] rounded-full pointer-events-none" />

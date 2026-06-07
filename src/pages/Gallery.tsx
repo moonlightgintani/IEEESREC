@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, X, ChevronLeft, ChevronRight, Image as ImageIcon, Maximize2, ArrowRight, Heart, Share2 } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
+import { resolveAssetUrl } from "@/lib/utils";
 
 /* =========================
    AUTO IMPORT IMAGES (LOCAL GITHUB)
@@ -17,10 +18,11 @@ const getLocalGroupedImages = () => {
     const parts = path.split("/");
     const folder = parts[parts.length - 2];
     if (!grouped[folder]) grouped[folder] = [];
-    grouped[folder].push({ url: module.default });
+    grouped[folder].push({ url: resolveAssetUrl(module.default) });
   });
   return grouped;
 };
+
 
 /* =========================
    FORMAT FOLDER NAME

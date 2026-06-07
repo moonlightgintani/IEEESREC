@@ -38,7 +38,7 @@ const AnimatedNumber = ({ value, label }: { value: number; label: string }) => {
 const StatsSection = () => {
   return (
     <section className="py-2 md:py-4 relative overflow-hidden bg-slate-50">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
       
       {/* Decorative floating shapes */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-transparent rounded-full blur-[100px] pointer-events-none" />

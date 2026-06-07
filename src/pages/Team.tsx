@@ -57,7 +57,7 @@ const TeamPage = () => {
             {/* Advanced Professional Deep-Blue Hero Section */}
             <section className="relative pt-36 pb-32 md:pt-48 md:pb-40 overflow-hidden bg-gradient-to-br from-[#001730] via-[#003764] to-[#005a8d] border-b border-slate-800">
                 {/* Animated Background Elements */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.05] mix-blend-overlay pointer-events-none"></div>
                 
                 <motion.div 
                 animate={{ rotate: 360 }}

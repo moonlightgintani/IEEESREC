@@ -33,7 +33,7 @@ const PublicationShowcase = () => {
   return (
     <section className="py-24 bg-[#0a0f1c] relative text-white border-y border-slate-800">
       {/* Background Graphic */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none"></div>
       
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10 flex flex-col lg:flex-row gap-16 items-center">
         

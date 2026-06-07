@@ -66,10 +66,10 @@ const Footer = () => (
                <ul className="space-y-4">
                  {group.links.map((link) => (
                    <li key={link.label}>
-                     <a href={link.href} className="group flex items-center text-slate-400 hover:text-white transition-colors">
+                     <Link to={link.href} className="group flex items-center text-slate-400 hover:text-white transition-colors">
                        <ChevronRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#00a6d6] mr-1" />
                        <span className="group-hover:translate-x-1 transition-transform">{link.label}</span>
-                     </a>
+                     </Link>
                    </li>
                  ))}
                </ul>

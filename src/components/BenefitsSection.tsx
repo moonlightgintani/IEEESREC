@@ -41,7 +41,7 @@ const BenefitsSection = () => {
       {/* Decorative Backgrounds */}
       <div className="absolute top-1/4 left-0 w-[600px] h-[600px] bg-slate-100/50 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sky-50/50 rounded-full blur-[100px] pointer-events-none translate-x-1/3 translate-y-1/3" />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.03] mix-blend-overlay pointer-events-none"></div>
 
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
         

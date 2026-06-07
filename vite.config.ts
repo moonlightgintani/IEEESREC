@@ -29,4 +29,17 @@ export default defineConfig(({ mode }) => ({
       "@tanstack/query-core",
     ],
   },
-}));
+
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.originalFileName && assetInfo.originalFileName.includes('gallery')) {
+            return 'assets/gallery/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        }
+      }
+    }
+  },
+}));

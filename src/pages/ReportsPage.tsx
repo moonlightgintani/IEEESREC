@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, Download, FolderOpen, Eye, FileArchive, Search, Calendar, BadgeInfo } from "lucide-react";
 import { useMemo, useState } from "react";
+import { resolveAssetUrl } from "@/lib/utils";
 
 /* =========================
    AUTO IMPORT DOCUMENTS
@@ -22,13 +23,14 @@ const getLocalGroupedDocs = () => {
     grouped[folder].push({ 
       id: `doc-${idx}`,
       name: fileName.replace(/\.(doc|docx|pdf)$/i, ''), 
-      url: url,
+      url: resolveAssetUrl(url),
       path: path,
       type: isPdf ? 'PDF' : isDocx ? 'Word' : 'Doc'
     });
   });
   return grouped;
 };
+
 
 const ReportsPage = () => {
   const groupedDocs = useMemo(() => getLocalGroupedDocs(), []);

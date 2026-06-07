@@ -4,6 +4,9 @@ import ieeeLogo from "@/assets/ieee-logo.png";
 import srecLogo from "@/assets/srec-logo.png";
 import snrLogo from "@/assets/snr-trust-logo.png";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
+
+const MotionLink = motion(Link);
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -22,8 +25,8 @@ const navLinks = [
 
 const Navbar = () => {
    const [open, setOpen] = useState(false);
-   
-   const isHomePage = window.location.pathname === "/";
+   const location = useLocation();
+   const isHomePage = location.pathname === "/";
    
    // True if user physically scrolled down
    const [hasScrolled, setHasScrolled] = useState(false);
@@ -51,7 +54,7 @@ const Navbar = () => {
          <div className="w-full flex flex-col items-center justify-center">
             
             {/* Mobile Hamburger Icon (Always visible on mobile right corner) */}
-            <div className={`xl:hidden absolute right-4 md:right-10 flex items-center z-[70] transition-all duration-1000 ${hideLogos ? 'top-1/2 -translate-y-1/2' : 'top-5 md:top-6'}`}>
+            <div className={`xl:hidden absolute right-4 md:right-10 flex items-center z-[70] transition-all duration-1000 ${hideLogos ? 'top-1/2 -translate-y-1/2' : 'top-1/2 -translate-y-1/2'}`}>
                <button 
                   onClick={() => setOpen(true)}
                   className="p-2 rounded-xl transition-all shadow-md bg-[#002855] text-white hover:bg-[#001f42] active:scale-95"
@@ -71,15 +74,15 @@ const Navbar = () => {
                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                className="w-full bg-white origin-top relative z-50 overflow-hidden shadow-md"
             >
-               <div className="grid grid-cols-3 items-center w-full pl-4 pr-16 xl:px-12 py-3 md:py-4 gap-2 md:gap-4">
-                  <div className="flex justify-start">
-                     <img src={srecLogo} alt="SREC" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+               <div className="grid grid-cols-3 items-center w-full px-12 sm:px-16 xl:px-24 py-3 md:py-4 gap-4 md:gap-8">
+                  <div className="flex justify-center items-center">
+                     <img src={srecLogo} alt="SREC" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
-                  <div className="flex justify-center">
-                     <img src={ieeeLogo} alt="IEEE" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+                  <div className="flex justify-center items-center">
+                     <img src={ieeeLogo} alt="IEEE" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
-                  <div className="flex justify-end">
-                     <img src={snrLogo} alt="SNR Trust" className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto object-contain flex-shrink-0" />
+                  <div className="flex justify-center items-center">
+                     <img src={snrLogo} alt="SNR Trust" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
                   </div>
                </div>
             </motion.div>
@@ -87,17 +90,17 @@ const Navbar = () => {
             {/* Bottom Row: Desktop Horizontal Nav Links - Blue Background */}
             <div className="hidden xl:flex items-center justify-center gap-x-8 gap-y-2 flex-wrap w-full bg-[#002855] py-4 px-4 transition-all duration-700 shadow-inner">
                {navLinks.map((l, index) => (
-                  <motion.a
+                  <MotionLink
                      initial={{ opacity: 0, y: -10 }}
                      animate={{ opacity: 1, y: 0 }}
                      transition={{ duration: 1.2, delay: 0.2 + (index * 0.05), ease: [0.16, 1, 0.3, 1] }}
                      key={l.label}
-                     href={l.href}
+                     to={l.href}
                      className="text-white/90 hover:text-white font-bold tracking-[0.3em] text-[11px] uppercase transition-all duration-500 relative group"
                   >
                      {l.label}
                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] transition-all duration-500 group-hover:w-full bg-white"></span>
-                  </motion.a>
+                  </MotionLink>
                ))}
                <motion.a
                      initial={{ opacity: 0, y: -10 }}
@@ -116,7 +119,7 @@ const Navbar = () => {
 
       {/* Global Transparent Spacer for Subpages to prevent content clipping under the tall fixed navbar */}
       {!isHomePage && (
-         <div className="h-[120px] md:h-[160px] w-full bg-transparent pointer-events-none" aria-hidden="true"></div>
+         <div className="h-[140px] sm:h-[160px] md:h-[200px] lg:h-[240px] w-full bg-transparent pointer-events-none" aria-hidden="true"></div>
       )}
 
       {/* Mobile Sidebar/Dropdown Menu */}
@@ -136,9 +139,9 @@ const Navbar = () => {
                </div>
                <div className="flex flex-col items-center justify-center min-h-screen py-20 space-y-6">
                   {navLinks.map((l, idx) => (
-                     <motion.a
+                     <MotionLink
                         key={l.label}
-                        href={l.href}
+                        to={l.href}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 + (idx * 0.05) }}
@@ -146,7 +149,7 @@ const Navbar = () => {
                         className="text-black/80 text-xl tracking-[0.3em] uppercase font-medium hover:text-blue-600 transition-colors"
                      >
                         {l.label}
-                     </motion.a>
+                     </MotionLink>
                   ))}
                   <motion.a
                      href="https://vtools.vtools.ieee.org/" target="_blank"
@@ -165,8 +168,8 @@ const Navbar = () => {
 
       {/* Floating Back to Home Button globally visible across all pages except landing page */}
       {!isHomePage && (
-        <a 
-          href="/" 
+        <Link 
+          to="/" 
           className="fixed bottom-6 right-6 lg:bottom-10 lg:right-10 z-[40] bg-black text-white p-4 rounded-full shadow-2xl flex flex-col items-center justify-center gap-1 hover:bg-slate-900 transition-all duration-500 group w-12 h-12 md:w-14 md:h-14 border border-white/20"
           title="Back to Home"
         >
@@ -174,7 +177,7 @@ const Navbar = () => {
             <path d="m12 19-7-7 7-7"/>
             <path d="M19 12H5"/>
           </svg>
-        </a>
+        </Link>
       )}
      </>
    )

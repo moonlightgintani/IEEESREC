@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { Loader2, ArrowRight, Calendar, Users, Mic } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ActivityItem {
   id: string | number;
@@ -19,8 +20,7 @@ const LatestHighlightsSection = () => {
       const { data } = await supabase
         .from("activities")
         .select("*")
-        .order("year", { ascending: false })
-        .order("sno", { ascending: true }) // Or date if they have a proper date field
+        .order("s_no", { ascending: false })
         .limit(3);
       return data || [];
     }
@@ -46,10 +46,10 @@ const LatestHighlightsSection = () => {
               Discover Our <span className="text-slate-900 font-serif font-medium">Latest Work</span>
             </h2>
           </div>
-          <a href="/activities" className="mt-6 md:mt-0 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-sm transition-all shadow-sm border border-slate-200 hover:border-slate-300 group">
+          <Link to="/activities" className="mt-6 md:mt-0 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-sm transition-all shadow-sm border border-slate-200 hover:border-slate-300 group">
             View All Activities
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {isLoading ? (

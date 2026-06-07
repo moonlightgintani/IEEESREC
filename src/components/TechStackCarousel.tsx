@@ -10,7 +10,7 @@ const technologies = [
 const TechStackCarousel = () => {
   return (
     <section className="py-10 md:py-12 bg-white border-y border-slate-200 overflow-hidden relative">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
       
       {/* Edge gradient masks for smooth fade out */}
       <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
