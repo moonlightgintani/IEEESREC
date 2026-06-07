@@ -74,15 +74,15 @@ const Navbar = () => {
                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                className="w-full bg-white origin-top relative z-50 overflow-hidden shadow-md"
             >
-               <div className="grid grid-cols-3 items-center w-full px-12 sm:px-16 xl:px-24 py-3 md:py-4 gap-4 md:gap-8">
+               <div className="flex justify-center items-center xl:grid xl:grid-cols-3 w-full px-6 sm:px-16 xl:px-24 py-3 md:py-4 gap-4 sm:gap-8 xl:gap-8">
                   <div className="flex justify-center items-center">
-                     <img src={srecLogo} alt="SREC" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
+                     <img src={srecLogo} alt="SREC" className="h-20 sm:h-22 md:h-24 lg:h-24 w-auto object-contain flex-shrink-0" />
                   </div>
                   <div className="flex justify-center items-center">
-                     <img src={ieeeLogo} alt="IEEE" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
+                     <img src={ieeeLogo} alt="IEEE" className="h-20 sm:h-22 md:h-24 lg:h-24 w-auto object-contain flex-shrink-0" />
                   </div>
                   <div className="flex justify-center items-center">
-                     <img src={snrLogo} alt="SNR Trust" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
+                     <img src={snrLogo} alt="SNR Trust" className="h-20 sm:h-22 md:h-24 lg:h-24 w-auto object-contain flex-shrink-0" />
                   </div>
                </div>
             </motion.div>
