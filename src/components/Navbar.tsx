@@ -76,13 +76,13 @@ const Navbar = () => {
             >
                <div className="grid grid-cols-3 items-center w-full px-12 sm:px-16 xl:px-24 py-3 md:py-4 gap-4 md:gap-8">
                   <div className="flex justify-center items-center">
-                     <img src={srecLogo} alt="SREC" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
+                     <img src={srecLogo} alt="SREC" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
                   </div>
                   <div className="flex justify-center items-center">
-                     <img src={ieeeLogo} alt="IEEE" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
+                     <img src={ieeeLogo} alt="IEEE" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
                   </div>
                   <div className="flex justify-center items-center">
-                     <img src={snrLogo} alt="SNR Trust" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto object-contain flex-shrink-0" />
+                     <img src={snrLogo} alt="SNR Trust" className="h-20 sm:h-24 md:h-32 lg:h-36 w-auto object-contain flex-shrink-0" />
                   </div>
                </div>
             </motion.div>
