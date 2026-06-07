@@ -53,8 +53,8 @@ const Navbar = () => {
          
          <div className="w-full flex flex-col items-center justify-center">
             
-            {/* Mobile Hamburger Icon (Always visible on mobile right corner) */}
-            <div className={`xl:hidden absolute right-4 md:right-10 flex items-center z-[70] transition-all duration-1000 ${hideLogos ? 'top-1/2 -translate-y-1/2' : 'top-1/2 -translate-y-1/2'}`}>
+            {/* Mobile Hamburger Icon (Always visible on mobile left corner) */}
+            <div className={`xl:hidden absolute left-4 md:left-10 flex items-center z-[70] transition-all duration-1000 top-1/2 -translate-y-1/2`}>
                <button 
                   onClick={() => setOpen(true)}
                   className="p-2 rounded-xl transition-all shadow-md bg-[#002855] text-white hover:bg-[#001f42] active:scale-95"
