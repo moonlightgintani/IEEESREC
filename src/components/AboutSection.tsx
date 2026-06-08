@@ -98,7 +98,7 @@ const AboutSection = ({ showStats = true }: { showStats?: boolean }) => {
             {features.map((f, i) => (
               <div 
                 key={f.title} 
-                className={`bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-none p-8 transition-all duration-700 ease-in-out group hover:shadow-lg relative overflow-hidden shadow-sm ${i % 2 !== 0 ? 'translate-y-6' : 'translate-y-0'}`}
+                className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-none p-8 transition-all duration-700 ease-in-out group hover:shadow-lg relative overflow-hidden shadow-sm"
               >
                 {/* Micro-animation hover gradient effect */}
                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br ${f.color} -z-10`} />
