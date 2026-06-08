@@ -55,12 +55,18 @@ const callGeminiAPI = async (userPrompt: string): Promise<string> => {
 
   const systemInstruction = 
     "You are Nexus, the AI assistant for SREC IEEE Student Branch at Sri Ramakrishna Engineering College, Coimbatore. " +
-    "Our branch was established on June 11th, 2001. Keep your answers brief, friendly, professional, and helpful. " +
-    "Focus on engineering, technology, our 8 technical societies, and membership benefits. " +
-    "Keep responses under 2-3 sentences. " +
-    "If the question is completely unrelated to SREC IEEE or general engineering, politely redirect the user back to SREC IEEE topics. " +
-    `Today's date is: ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}. ` +
-    "If the user asks about the date or today, state this date clearly.";
+    "Use the following SREC IEEE facts to answer questions: " +
+    "- Established: June 11th, 2001 under the IEEE Madras Section. " +
+    "- Eligibility: Any SREC student from any department or year can join SREC IEEE. " +
+    "- Benefits: Exclusive access to industry workshops, global networking, research mentorship, hackathons, and official IEEE publications. " +
+    "- How to participate: View upcoming events on the 'Latest Activities' page. Members receive links via university email. " +
+    "- Leadership: Opportunities exist via annual elections for Executive Committee (ExCom) or volunteering. " +
+    "- SREC Campus: SNR Sons Charitable Trust, 45-acre green campus. " +
+    "- SREC IEEE stats: 500+ members, 60+ annual events, 8 technical societies (Computer Society, EMBS, ComSoc, Power & Energy, CIS, etc.). " +
+    "Guidelines:\n" +
+    "1. Keep responses very brief, friendly, professional, and under 2-3 sentences.\n" +
+    `2. Today's date is: ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}. If the user asks about the date or today, state this date clearly.\n` +
+    "3. If the user asks about topics completely unrelated to SREC IEEE or general engineering, politely redirect them back to SREC IEEE.";
 
   try {
     const response = await fetch(
@@ -99,53 +105,6 @@ const callGeminiAPI = async (userPrompt: string): Promise<string> => {
 };
 
 const getAIResponse = async (input: string): Promise<string> => {
-  const normalized = input.toLowerCase().trim();
-  const cleanInput = normalized.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
-  
-  // Handle today's date questions dynamically
-  if (cleanInput.includes("date") || cleanInput.includes("today")) {
-    const options: Intl.DateTimeFormatOptions = { 
-      weekday: "long", 
-      year: "numeric", 
-      month: "long", 
-      day: "numeric" 
-    };
-    const dateStr = new Date().toLocaleDateString("en-US", options);
-    return `Today's date is ${dateStr}.`;
-  }
-
-  const words = cleanInput.split(/\s+/);
-  let bestMatch = null;
-  let maxScore = 0;
-  
-  for (const item of qaDatabase) {
-    let score = 0;
-    
-    // Score based on full phrase match
-    for (const keyword of item.keywords) {
-      if (cleanInput.includes(keyword)) {
-        score += 3;
-      }
-    }
-    
-    // Score based on word matches
-    for (const word of words) {
-      if (item.keywords.includes(word)) {
-        score += 1;
-      }
-    }
-    
-    if (score > maxScore) {
-      maxScore = score;
-      bestMatch = item;
-    }
-  }
-  
-  if (maxScore >= 2 && bestMatch) {
-    return bestMatch.answer;
-  }
-  
-  // Fallback to real AI API call
   return await callGeminiAPI(input);
 };
 
