@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bot, X, Sparkles, Send, Globe, ArrowRight, Activity, MessageSquare } from "lucide-react";
+import { Bot, X, Sparkles, Send, Globe, ArrowRight, Activity } from "lucide-react";
 import { Link } from "react-router-dom";
 import robotGif from "@/assets/robot.gif";
 
@@ -47,11 +47,74 @@ const qaDatabase = [
   }
 ];
 
-const getAIResponse = (input: string): string => {
+const callGeminiAPI = async (userPrompt: string): Promise<string> => {
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    return "That sounds interesting! While I don't have specific details on that in my memory bank, I can guide you on joining IEEE SREC, our technical chapters, or upcoming events.";
+  }
+
+  const systemInstruction = 
+    "You are Nexus, the AI assistant for SREC IEEE Student Branch at Sri Ramakrishna Engineering College, Coimbatore. " +
+    "Our branch was established on June 11th, 2001. Keep your answers brief, friendly, professional, and helpful. " +
+    "Focus on engineering, technology, our 8 technical societies, and membership benefits. " +
+    "Keep responses under 2-3 sentences. " +
+    "If the question is completely unrelated to SREC IEEE or general engineering, politely redirect the user back to SREC IEEE topics. " +
+    `Today's date is: ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}. ` +
+    "If the user asks about the date or today, state this date clearly.";
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: `${systemInstruction}\n\nUser: ${userPrompt}` }]
+            }
+          ]
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`API response status error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (text) {
+      return text.trim();
+    }
+    throw new Error("No text returned in Gemini candidate");
+  } catch (error) {
+    console.error("Gemini API call failed:", error);
+    return "That sounds interesting! While I don't have specific details on that in my memory bank, I can guide you on joining IEEE SREC, our technical chapters, or upcoming events.";
+  }
+};
+
+const getAIResponse = async (input: string): Promise<string> => {
   const normalized = input.toLowerCase().trim();
   const cleanInput = normalized.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
-  const words = cleanInput.split(/\s+/);
   
+  // Handle today's date questions dynamically
+  if (cleanInput.includes("date") || cleanInput.includes("today")) {
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: "long", 
+      year: "numeric", 
+      month: "long", 
+      day: "numeric" 
+    };
+    const dateStr = new Date().toLocaleDateString("en-US", options);
+    return `Today's date is ${dateStr}.`;
+  }
+
+  const words = cleanInput.split(/\s+/);
   let bestMatch = null;
   let maxScore = 0;
   
@@ -82,17 +145,13 @@ const getAIResponse = (input: string): string => {
     return bestMatch.answer;
   }
   
-  const fallbacks = [
-    "I've searched the SREC IEEE Nexus database, but I couldn't find a direct answer to your question. Try asking about membership, joining eligibility, or leadership opportunities!",
-    "That sounds interesting! While I don't have specific details on that in my memory bank, I can guide you on joining IEEE SREC, our technical chapters, or upcoming events.",
-    "I'm sorry, I couldn't find a matching answer. Feel free to rephrase or click one of the suggested questions below!"
-  ];
-  
-  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+  // Fallback to real AI API call
+  return await callGeminiAPI(input);
 };
 
 const FloatingRobotAgent = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showWelcomeBubble, setShowWelcomeBubble] = useState(false);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
     { 
       sender: "bot", 
@@ -104,24 +163,32 @@ const FloatingRobotAgent = () => {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Trigger speech bubble popup after 2.5s delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcomeBubble(true);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
-      // Small timeout to allow the dialog animation to complete
+      setShowWelcomeBubble(false);
       setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     }
   }, [isOpen, chatHistory, isTyping]);
 
-  const handleSendMessage = (text: string) => {
+  const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
     
     setChatHistory((prev) => [...prev, { sender: "user", text }]);
     setInputValue("");
     setIsTyping(true);
     
-    setTimeout(() => {
-      const response = getAIResponse(text);
+    try {
+      const response = await getAIResponse(text);
       setIsTyping(false);
       
       // Stream characters to simulate real AI generation
@@ -145,7 +212,11 @@ const FloatingRobotAgent = () => {
           });
         }
       }, 12);
-    }, 800);
+    } catch (error) {
+      setIsTyping(false);
+      const fallbackMsg = "That sounds interesting! While I don't have specific details on that in my memory bank, I can guide you on joining IEEE SREC, our technical chapters, or upcoming events.";
+      setChatHistory((prev) => [...prev, { sender: "bot", text: fallbackMsg }]);
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -163,6 +234,23 @@ const FloatingRobotAgent = () => {
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
       
+      {/* Welcome Speech Bubble Pop-up */}
+      <AnimatePresence>
+        {!isOpen && showWelcomeBubble && (
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="absolute right-28 bottom-10 md:right-32 md:bottom-12 bg-white text-slate-800 text-xs font-bold py-2.5 px-4 rounded-xl shadow-lg border border-slate-100 whitespace-nowrap z-50 flex items-center gap-2 group-hover:scale-105 transition-transform"
+          >
+            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></div>
+            <span>How can I help you?</span>
+            <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white border-r border-t border-slate-100 rotate-45"></div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
