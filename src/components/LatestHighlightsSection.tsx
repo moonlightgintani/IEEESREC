@@ -57,17 +57,16 @@ const LatestHighlightsSection = () => {
             <Loader2 className="h-12 w-12 animate-spin text-[#00629b] opacity-50" />
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 gap-8">
-            {latestActivities.map((activity: ActivityItem, i: number) => {
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {latestActivities.map((activity: ActivityItem) => {
               const imageUrl = activity.image_url || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800";
-              const isFeatured = i === 0;
 
               return (
                 <div 
                   key={activity.id} 
-                  className={`group relative bg-white/70 backdrop-blur-lg rounded-none overflow-hidden border border-white shadow-sm hover:shadow-lg transition-all duration-700 ease-in-out flex flex-col ${isFeatured ? 'lg:col-span-2 lg:flex-row' : ''}`}
+                  className="group relative bg-white/70 backdrop-blur-lg rounded-none overflow-hidden border border-white shadow-sm hover:shadow-lg transition-all duration-700 ease-in-out flex flex-col"
                 >
-                  <div className={`relative overflow-hidden shrink-0 ${isFeatured ? 'lg:w-[50%] h-64 lg:h-auto' : 'h-56'}`}>
+                  <div className="relative overflow-hidden shrink-0 h-56">
                     <img 
                       src={imageUrl} 
                       alt={activity.event} 
@@ -82,8 +81,8 @@ const LatestHighlightsSection = () => {
                     </div>
                   </div>
 
-                  <div className={`p-6 md:p-8 flex-1 flex flex-col justify-center ${isFeatured ? 'bg-gradient-to-br from-slate-50 to-white' : 'bg-white'}`}>
-                    <h3 className={`font-serif font-bold text-slate-800 mb-4 group-hover:text-[#00629b] transition-colors leading-tight ${isFeatured ? 'text-2xl md:text-3xl' : 'text-xl'}`}>
+                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-between bg-white">
+                    <h3 className="font-serif font-bold text-slate-800 mb-4 group-hover:text-[#00629b] transition-colors leading-tight text-xl">
                       {activity.event}
                     </h3>
 

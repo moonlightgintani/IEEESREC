@@ -614,8 +614,8 @@ const OfficeBearersSection = () => {
 
                                 <div className="columns-1 md:columns-2 xl:columns-3 gap-8">
                                     {sortedGroups.map(group => (
-                                        <div key={group.role} className="flex flex-col gap-3 break-inside-avoid mb-8 inline-block w-full">
-                                            <h4 className="text-sm font-black tracking-widest uppercase text-[#00629b] leading-tight">
+                                        <div key={group.role} className="break-inside-avoid mb-8 inline-block w-full">
+                                            <h4 className="text-sm font-black tracking-widest uppercase text-[#00629b] leading-tight mb-3">
                                                 {formatRoleDisplay(group.role)}
                                             </h4>
                                             <div className="space-y-2">

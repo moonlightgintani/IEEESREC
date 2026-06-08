@@ -128,11 +128,6 @@ const CollegeAboutSection = () => {
                       {f.desc}
                     </p>
                   </div>
-                  <div className={`hidden md:flex items-center justify-center opacity-0 -translate-x-4 transition-all duration-700 ease-in-out ${isHovered ? 'opacity-100 translate-x-0' : ''}`}>
-                    <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
-                      <ChevronRight className="text-slate-400" />
-                    </div>
-                  </div>
                 </div>
               );
             })}
