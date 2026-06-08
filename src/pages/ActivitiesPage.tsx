@@ -435,11 +435,11 @@ const ActivitiesPage = () => {
                 className="w-full max-w-4xl max-h-full overflow-y-auto pointer-events-auto"
               >
                 <div className="bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col lg:flex-row w-full">
-                  <div className="lg:w-1/2 relative bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200 min-h-[250px] lg:min-h-full flex items-center justify-center">
+                  <div className="lg:w-1/2 relative bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200 min-h-[200px] lg:min-h-full flex items-center justify-center p-4">
                      <img 
                        src={getValidImageUrl(selectedModalItem.image_url)} 
                        alt={selectedModalItem.event}
-                       className="absolute inset-0 w-full h-full object-contain p-4" 
+                       className="w-full h-auto max-h-[350px] lg:absolute lg:inset-0 lg:h-full lg:max-h-none lg:p-4 object-contain" 
                      />
                   </div>
                   <div className="lg:w-1/2 p-6 lg:p-10 flex flex-col bg-white">
