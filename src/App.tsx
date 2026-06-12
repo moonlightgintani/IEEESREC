@@ -52,6 +52,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         {!Capacitor.isNativePlatform() && <SpeedInsights />}
+        {!Capacitor.isNativePlatform() && <Analytics />}
         {!Capacitor.isNativePlatform() && <PWAInstallPrompt />}
         <RouterComponent>
           <Routes>

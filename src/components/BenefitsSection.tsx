@@ -14,7 +14,7 @@ const benefits = [
     desc: "Build essential skills by leading massive student initiatives.",
     icon: Target,
     colSpan: "md:col-span-1 lg:col-span-1",
-    bg: "bg-slate-1000",
+    bg: "bg-cyan-500",
     gradient: "from-cyan-300 to-cyan-500",
   },
   {
@@ -84,9 +84,6 @@ const BenefitsSection = () => {
                       <div className="w-16 h-16 rounded-[1.25rem] bg-white flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 border border-slate-200 shadow-md relative overflow-hidden">
                         <div className={`absolute inset-0 bg-gradient-to-tr ${b.gradient} opacity-10`} />
                         <b.icon size={28} className="text-slate-800 group-hover:text-[#0b3b8f] transition-colors duration-500 relative z-10" strokeWidth={2.5} />
-                      </div>
-                      <div className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-300 group-hover:border-cyan-200 group-hover:text-cyan-500 transition-colors duration-500">
-                        <ArrowRight size={16} className="-rotate-45 group-hover:rotate-0 transition-transform duration-500" />
                       </div>
                     </div>
                     

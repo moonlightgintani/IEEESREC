@@ -66,11 +66,11 @@ const callGeminiAPI = async (userPrompt: string): Promise<string> => {
     "Guidelines:\n" +
     "1. Keep responses very brief, friendly, professional, and under 2-3 sentences.\n" +
     `2. Today's date is: ${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}. If the user asks about the date or today, state this date clearly.\n` +
-    "3. If the user asks about topics completely unrelated to SREC IEEE or general engineering, politely redirect them back to SREC IEEE.";
+    "3. If the user asks about topics unrelated to SREC IEEE or general engineering, answer their questions directly using your general knowledge (Google Gemini API capabilities).";
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {

@@ -3,7 +3,7 @@ import { Zap, Globe, GraduationCap, Lightbulb, Target, Eye, Users, Rocket, Activ
 
 const features = [
   { icon: Zap, title: "Technical Workshops", desc: "Hands-on sessions on MATLAB, PLC, IoT and emerging technologies.", color: "from-amber-400 to-orange-500", bg: "bg-orange-500/10", text: "text-orange-500" },
-  { icon: Globe, title: "Global Networking", desc: "Connect with IEEE professionals and researchers worldwide.", color: "from-blue-400 to-cyan-500", bg: "bg-slate-1000/10", text: "text-blue-500" },
+  { icon: Globe, title: "Global Networking", desc: "Connect with IEEE professionals and researchers worldwide.", color: "from-blue-400 to-cyan-500", bg: "bg-blue-500/10", text: "text-blue-500" },
   { icon: GraduationCap, title: "Career Growth", desc: "Industry interaction, guest lectures and skill development.", color: "from-emerald-400 to-teal-500", bg: "bg-emerald-500/10", text: "text-emerald-500" },
   { icon: Lightbulb, title: "Innovation", desc: "Ideathons, hackathons and IEEE Xtreme programming.", color: "from-purple-400 to-pink-500", bg: "bg-purple-500/10", text: "text-purple-500" },
 ];
@@ -93,7 +93,7 @@ const AboutSection = ({ showStats = true }: { showStats?: boolean }) => {
 
           {/* Right Column: Feature Cards Grid */}
           <div className="lg:col-span-7 grid md:grid-cols-2 gap-6 relative">
-            <div className="absolute inset-0 bg-slate-1000/5 blur-[120px] -z-10 rounded-full" />
+            <div className="absolute inset-0 bg-slate-900/5 blur-[120px] -z-10 rounded-full" />
             
             {features.map((f, i) => (
               <div 
