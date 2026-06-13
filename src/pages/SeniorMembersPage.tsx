@@ -313,7 +313,7 @@ const SeniorMembersPage = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight mb-3 text-slate-900"
           >
-            Distinguished <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 drop-shadow-[0_4px_15px_rgba(37,99,235,0.08)]">Advisors</span>
+            Senior<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 drop-shadow-[0_4px_15px_rgba(37,99,235,0.08)]"> Members</span>
           </motion.h1>
 
           <motion.p
@@ -479,7 +479,7 @@ const SeniorMembersPage = () => {
                   <div className="space-y-6">
                     <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
                       <GraduationCap className="text-blue-600" size={18} />
-                      <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Academic Board & Faculty Advisors</h2>
+                      <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Faculty Advisors & Senior Members</h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                       {groupedMembers.others.map(member => (
