@@ -475,11 +475,11 @@ const SeniorMembersPage = () => {
                 )}
 
                 {/* Faculty Advisors / Others Tier */}
-                {groupedMembers.others.length > 0 && (
+                {groupedMembers.others.length > 0  && (
                   <div className="space-y-6">
                     <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
                       <GraduationCap className="text-blue-600" size={18} />
-                      <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Faculty Advisors & Senior Members</h2>
+                      <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">Academic Board & Senior Members</h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                       {groupedMembers.others.map(member => (
