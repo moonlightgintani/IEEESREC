@@ -12,7 +12,7 @@ const TeamPage = () => {
 
     const teamCategories = [
         {
-            title: "Faculty & Advisers",
+            title: "Senior Members",
             description: "Eminent professors and industry mentors who shape the vision and ensure the academic rigor of our student branch.",
             icon: GraduationCap,
             href: "/senior-members",
@@ -32,7 +32,7 @@ const TeamPage = () => {
             shadow: "group-hover:shadow-emerald-900/5",
         },
         {
-            title: "Student Members",
+            title: "Members Count",
             description: "Our diverse community of passionate engineering students building solutions and contributing to collaborative projects.",
             icon: Users,
             href: "/members",
@@ -58,54 +58,54 @@ const TeamPage = () => {
             <section className="relative pt-36 pb-32 md:pt-48 md:pb-40 overflow-hidden bg-gradient-to-br from-[#001730] via-[#003764] to-[#005a8d] border-b border-slate-800">
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-[0.05] mix-blend-overlay pointer-events-none"></div>
-                
-                <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-[400px] -right-[200px] w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" 
+
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-[400px] -right-[200px] w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"
                 />
-                <motion.div 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-0 left-0 w-[600px] h-[400px] bg-blue-500/20 blur-[120px] pointer-events-none transform -translate-x-1/4" 
+                <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute bottom-0 left-0 w-[600px] h-[400px] bg-blue-500/20 blur-[120px] pointer-events-none transform -translate-x-1/4"
                 />
 
                 <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1, transition: { staggerChildren: 0.2 } as any },
-                    }}
-                    className="max-w-4xl mx-auto"
-                >
-                    <motion.div variants={itemVariants} className="flex justify-center mb-8">
-                    <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-blue-50 font-semibold text-xs tracking-[0.2em] uppercase shadow-lg">
-                        <Network size={16} className="text-cyan-300" />
-                        <span>The People of IEEE SREC</span>
-                    </div>
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1, transition: { staggerChildren: 0.2 } as any },
+                        }}
+                        className="max-w-4xl mx-auto"
+                    >
+                        <motion.div variants={itemVariants} className="flex justify-center mb-8">
+                            <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-blue-50 font-semibold text-xs tracking-[0.2em] uppercase shadow-lg">
+                                <Network size={16} className="text-cyan-300" />
+                                <span>The People of IEEE SREC</span>
+                            </div>
+                        </motion.div>
+
+                        <motion.h1
+                            variants={itemVariants}
+                            className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] mb-8"
+                        >
+                            Leadership & <br className="hidden md:block" />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-200 to-white drop-shadow-sm">
+                                Excellence
+                            </span>
+                        </motion.h1>
+
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed font-light"
+                        >
+                            A dynamic collective of visionaries, mentors, and innovators dedicated to bridging the gap between academic theory and real-world technological advancement.
+                        </motion.p>
                     </motion.div>
-
-                    <motion.h1 
-                    variants={itemVariants}
-                    className="text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] mb-8"
-                    >
-                    Leadership & <br className="hidden md:block" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-200 to-white drop-shadow-sm">
-                        Excellence
-                    </span>
-                    </motion.h1>
-
-                    <motion.p 
-                    variants={itemVariants}
-                    className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed font-light"
-                    >
-                    A dynamic collective of visionaries, mentors, and innovators dedicated to bridging the gap between academic theory and real-world technological advancement.
-                    </motion.p>
-                </motion.div>
                 </div>
-                
+
                 {/* Soft overhang overlay line */}
                 <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
             </section>
@@ -129,7 +129,7 @@ const TeamPage = () => {
                                 >
                                     {/* Subtle Top Gradient Line */}
                                     <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.bgLight.replace('bg-', 'from-').replace('50', '200')} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                                    
+
                                     <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${category.bgLight} border border-white/50 shadow-sm transition-transform duration-500 group-hover:scale-110`}>
                                         <Icon size={32} className={`${category.accentColor}`} />
                                     </div>
@@ -150,7 +150,7 @@ const TeamPage = () => {
                                             <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
                                         </div>
                                     </div>
-                                    
+
                                     {/* Floating decorative background shape */}
                                     <div className={`absolute -bottom-8 -right-8 w-32 h-32 rounded-full ${category.bgLight} blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none`} />
                                 </Link>
@@ -164,10 +164,10 @@ const TeamPage = () => {
             <section className="py-20 bg-white border-y border-slate-200 overflow-hidden relative">
                 <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-50 rounded-full blur-[80px] pointer-events-none -translate-y-1/2" />
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-50 rounded-full blur-[80px] pointer-events-none translate-y-1/2" />
-                
+
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-16">
-                        <motion.h2 
+                        <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -175,7 +175,7 @@ const TeamPage = () => {
                         >
                             The Strength in Numbers
                         </motion.h2>
-                        <motion.p 
+                        <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
@@ -190,7 +190,7 @@ const TeamPage = () => {
                         {stats.map((stat, i) => {
                             const SIcon = stat.icon;
                             return (
-                                <motion.div 
+                                <motion.div
                                     key={i}
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
