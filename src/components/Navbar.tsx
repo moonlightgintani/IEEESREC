@@ -18,7 +18,7 @@ const navLinks = [
    { label: "Plans", href: "/annual-plans" },
    { label: "Gallery", href: "/gallery" },
    { label: "Reports", href: "/reports" },
-   { label: "AECTSD", href: "http://localhost:5173/" },
+   { label: "AECTSD", href: "https://aectsd.vercel.app/" },
    { label: "Funding", href: "/funding" },
    { label: "Contact", href: "/contact" },
    { label: "Admin", href: "/admin" },
