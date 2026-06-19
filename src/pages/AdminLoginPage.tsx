@@ -207,7 +207,7 @@ const AdminLoginPage = () => {
 
           <div className="mt-8 text-center text-xs text-slate-400 flex flex-col items-center gap-2">
             <ShieldCheck size={18} className="text-[#0b3b8f]/50" />
-            <p>Secured by 256-bit encryption & Supabase Auth.</p>
+            <p>Secured by Knox.</p>
           </div>
         </div>
       </motion.div>
