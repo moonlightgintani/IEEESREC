@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { Cpu, Radio, HeartPulse, Gauge, Loader2, Target, Network, Layers, Activity, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 import wieLogo from "@/assets/societies/WIE.jpg";
 import embsLogo from "@/assets/societies/EMBS.jpg";
@@ -59,6 +60,28 @@ const getSlugForSociety = (name: string, id: number) => {
   return id.toString();
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
 const SocietiesSection = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
@@ -100,7 +123,13 @@ const SocietiesSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
           {societies.map((s: any, i: number) => {
             const token = designTokens[i % designTokens.length];
             const Icon = token.icon;
@@ -110,7 +139,8 @@ const SocietiesSection = () => {
             const externalUrl = societyLinks[linkSlug] || "https://www.ieee.org/";
             
             return (
-              <a
+              <motion.a
+                variants={cardVariants}
                 href={externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -153,10 +183,10 @@ const SocietiesSection = () => {
                   </div>
                   
                 </div>
-              </a>
+              </motion.a>
             );
           })}
-        </div>
+        </motion.div>
         
       </div>
     </section>

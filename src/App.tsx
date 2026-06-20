@@ -37,6 +37,8 @@ import ReportsPage from "./pages/ReportsPage.tsx";
 
 
 
+import PageTransition from "./components/PageTransition.tsx";
+
 const queryClient = new QueryClient();
 
 // Use HashRouter for native app platforms to prevent WebView routing failures,
@@ -55,33 +57,33 @@ const App = () => {
         {!Capacitor.isNativePlatform() && <PWAInstallPrompt />}
         <RouterComponent>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/activities" element={<ActivitiesPage />} />
-            <Route path="/Team" element={<TeamPage />} />
-            <Route path="/office-bearers" element={<OfficeBearersPage />} />
-            <Route path="/members" element={<MembersPage />} />
-            <Route path="/senior-members" element={<SeniorMembersPage />} />
-            <Route path="/awards" element={<AwardsPage />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/reports" element={<ReportsPage />} />
-            <Route path="/annual-plans" element={<AnnualPlansPage />} />
-            <Route path="/funding" element={<FundingsPlanPage />} />
-            <Route path="/societies" element={<SocietiesPage />} />
-            <Route path="/societies/srec" element={<SrecBranchPage />} />
-            <Route path="/societies/wie" element={<WiePage />} />
-            <Route path="/societies/embs" element={<EmbsPage />} />
-            <Route path="/societies/cs" element={<CsPage />} />
-            <Route path="/societies/comsoc" element={<ComsocPage />} />
-            <Route path="/societies/pels" element={<PelsPage />} />
-            <Route path="/societies/im" element={<ImPage />} />
-            <Route path="/societies/cis" element={<CisPage />} />
-            <Route path="/join" element={<JoinPage />} />
-            <Route path="/societies/:id" element={<SocietyDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/admin-login" element={<AdminLoginPage />} />
-            <Route path="/admin/*" element={<AdminDashboardRoute />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+            <Route path="/activities" element={<PageTransition><ActivitiesPage /></PageTransition>} />
+            <Route path="/Team" element={<PageTransition><TeamPage /></PageTransition>} />
+            <Route path="/office-bearers" element={<PageTransition><OfficeBearersPage /></PageTransition>} />
+            <Route path="/members" element={<PageTransition><MembersPage /></PageTransition>} />
+            <Route path="/senior-members" element={<PageTransition><SeniorMembersPage /></PageTransition>} />
+            <Route path="/awards" element={<PageTransition><AwardsPage /></PageTransition>} />
+            <Route path="/gallery" element={<PageTransition><Gallery /></PageTransition>} />
+            <Route path="/reports" element={<PageTransition><ReportsPage /></PageTransition>} />
+            <Route path="/annual-plans" element={<PageTransition><AnnualPlansPage /></PageTransition>} />
+            <Route path="/funding" element={<PageTransition><FundingsPlanPage /></PageTransition>} />
+            <Route path="/societies" element={<PageTransition><SocietiesPage /></PageTransition>} />
+            <Route path="/societies/srec" element={<PageTransition><SrecBranchPage /></PageTransition>} />
+            <Route path="/societies/wie" element={<PageTransition><WiePage /></PageTransition>} />
+            <Route path="/societies/embs" element={<PageTransition><EmbsPage /></PageTransition>} />
+            <Route path="/societies/cs" element={<PageTransition><CsPage /></PageTransition>} />
+            <Route path="/societies/comsoc" element={<PageTransition><ComsocPage /></PageTransition>} />
+            <Route path="/societies/pels" element={<PageTransition><PelsPage /></PageTransition>} />
+            <Route path="/societies/im" element={<PageTransition><ImPage /></PageTransition>} />
+            <Route path="/societies/cis" element={<PageTransition><CisPage /></PageTransition>} />
+            <Route path="/join" element={<PageTransition><JoinPage /></PageTransition>} />
+            <Route path="/societies/:id" element={<PageTransition><SocietyDetailPage /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+            <Route path="/admin-login" element={<PageTransition><AdminLoginPage /></PageTransition>} />
+            <Route path="/admin/*" element={<PageTransition><AdminDashboardRoute /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </RouterComponent>
       </TooltipProvider>

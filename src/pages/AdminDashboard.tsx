@@ -181,14 +181,7 @@ const AdminDashboard = () => {
                   </button>
                 ))}
               </nav>
-              <div className="p-4 border-t border-slate-100 bg-white">
-                <button
-                  onClick={() => handleSignOut("/")}
-                  className="flex w-full justify-center items-center gap-2 rounded-xl bg-red-50 text-red-600 border border-red-100 px-5 py-3 font-semibold hover:bg-red-100 transition-colors"
-                >
-                  <LogOut size={16} /> Exit Admin
-                </button>
-              </div>
+              
             </motion.aside>
           </>
         )}
@@ -225,14 +218,6 @@ const AdminDashboard = () => {
               </button>
             ))}
           </nav>
-          <div className="p-4 border-t border-slate-100 sticky bottom-0 bg-white">
-            <button
-              onClick={() => handleSignOut("/")}
-              className="flex w-full justify-center items-center gap-2 rounded-xl bg-red-50 text-red-600 border border-red-100 px-5 py-3 font-semibold hover:bg-red-100 transition-colors"
-            >
-              <LogOut size={16} /> Exit Admin
-            </button>
-          </div>
         </aside>
 
         {/* Sidebar space placeholder for desktop */}
