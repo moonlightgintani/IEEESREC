@@ -7,32 +7,46 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
 const AdminLoginPage = () => {
+  const navigate = useNavigate();
+
+  // =========================
+  // STATE
+  // =========================
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [adminKey, setAdminKey] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const LOCAL_ADMIN_KEY = "MRBB2026";
 
+  // =========================
+  // SESSION CHECK
+  // =========================
   useEffect(() => {
-    // Check if already logged in via Session Storage or Supabase Auth
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       const localAdmin = sessionStorage.getItem("admin_auth");
+
       if (session || localAdmin === "true") {
         navigate("/admin");
       }
     };
+
     checkSession();
   }, [navigate]);
 
+  // =========================
+  // AUTH HANDLER
+  // =========================
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      // =========================
+      // REGISTER
+      // =========================
       if (isRegistering) {
         if (adminKey !== LOCAL_ADMIN_KEY) {
           toast.error("Invalid Admin Passkey. Registration blocked.");
@@ -40,194 +54,192 @@ const AdminLoginPage = () => {
           return;
         }
 
-        // Check if username already exists in admins table
-        const { data: existingUser, error: checkError } = await supabase
-          .from("admins")
-          .select("username")
-          .eq("username", username.trim())
-          .maybeSingle();
+        // 1. Create Supabase Auth User
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email: username.trim(),
+          password: password,
+        });
 
-        if (checkError) {
-          toast.error("Database connection error: " + checkError.message);
+        if (signUpError || !data.user) {
+          toast.error("Registration failed: " + signUpError?.message);
           setLoading(false);
           return;
         }
 
-        if (existingUser) {
-          toast.error("Username already registered.");
-          setLoading(false);
-          return;
-        }
-
-        // Insert new admin to admins table
-        const { error: insertError } = await supabase
-          .from("admins")
-          .insert([{ username: username.trim(), password: password }]);
+        // 2. Insert admin profile (NO PASSWORD STORED)
+        const { error: insertError } = await supabase.from("admins").insert([
+          {
+            id: data.user.id,
+            email: username.trim(),
+            username: username.trim(),
+            admin_secret_key_used: adminKey,
+            role: "admin",
+          },
+        ]);
 
         if (insertError) {
-          toast.error("Registration failed: " + insertError.message);
-        } else {
-          toast.success("Registration successful! You can now log in.");
-          setIsRegistering(false);
+          toast.error("Profile creation failed: " + insertError.message);
+          setLoading(false);
+          return;
         }
-      } else {
-        // Query admins table for the username and password
-        const { data: adminUser, error: loginError } = await supabase
-          .from("admins")
-          .select("*")
-          .eq("username", username.trim())
-          .eq("password", password)
-          .maybeSingle();
+
+        toast.success("Registration successful! You can now log in.");
+        setIsRegistering(false);
+      }
+
+      // =========================
+      // LOGIN
+      // =========================
+      else {
+        const { error: loginError } =
+          await supabase.auth.signInWithPassword({
+            email: username.trim(),
+            password: password,
+          });
 
         if (loginError) {
-          toast.error("Database error during login: " + loginError.message);
-        } else if (adminUser) {
+          toast.error("Login failed: " + loginError.message);
+        } else {
           sessionStorage.setItem("admin_auth", "true");
           toast.success("Logged in successfully");
           navigate("/admin");
-        } else {
-          // Allow fallback for default local admin credential
-          if (username.trim() === "admin" && password === "admin123") {
-            sessionStorage.setItem("admin_auth", "true");
-            toast.success("Logged in successfully (Local Dev Mode)");
-            navigate("/admin");
-          } else {
-            toast.error("Invalid username or password.");
-          }
         }
       }
     } catch (err) {
-      toast.error("An unexpected error occurred.");
+      toast.error("Unexpected error occurred.");
     } finally {
       setLoading(false);
     }
   };
 
+  // =========================
+  // UI
+  // =========================
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4 relative overflow-hidden">
-      
-      {/* Decorative Animated Background */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400/20 rounded-full blur-3xl mix-blend-multiply animate-blob"></div>
-      <div className="absolute top-[20%] right-[-10%] w-[30rem] h-[30rem] bg-indigo-400/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-[-20%] left-[20%] w-[40rem] h-[40rem] bg-cyan-400/20 rounded-full blur-3xl mix-blend-multiply animate-blob animation-delay-4000"></div>
 
+      {/* Background */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-[20%] right-[-10%] w-[30rem] h-[30rem] bg-indigo-400/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-[-20%] left-[20%] w-[40rem] h-[40rem] bg-cyan-400/20 rounded-full blur-3xl"></div>
+
+      {/* Back Button */}
       <Link
         to="/"
-        className="absolute top-8 left-8 flex items-center gap-2 text-slate-500 hover:text-[#0b3b8f] transition font-bold z-10 bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-sm"
+        className="absolute top-8 left-8 flex items-center gap-2 text-slate-500 hover:text-[#0b3b8f] transition font-bold z-10 bg-white/80 px-4 py-2 rounded-full"
       >
         <ArrowLeft size={18} />
         Return to Portal
       </Link>
 
+      {/* Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-[420px] bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(11,59,143,0.15)] border border-white overflow-hidden relative z-10"
+        className="w-full max-w-[420px] bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-xl border overflow-hidden z-10"
       >
-        <div className="bg-gradient-to-br from-[#0b3b8f] to-indigo-900 p-10 text-center relative overflow-hidden">
-          {/* Subtle overlay pattern */}
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] bg-[length:12px_12px]"></div>
-          
-          <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-[1.5rem] flex items-center justify-center mx-auto mb-5 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] border border-white/20 relative z-10">
-            <Lock size={36} strokeWidth={1.5} />
+
+        {/* Header */}
+        <div className="bg-gradient-to-br from-[#0b3b8f] to-indigo-900 p-10 text-center">
+          <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5 text-white">
+            <Lock size={36} />
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight relative z-10">{isRegistering ? "Admin Registration" : "Admin Gateway"}</h1>
-          <p className="text-blue-100/80 font-medium mt-2 text-sm relative z-10">
-            {isRegistering ? "Provision a new security clearance" : "Authorized IEEE SREC personnel only"}
+
+          <h1 className="text-3xl font-black text-white">
+            {isRegistering ? "Admin Registration" : "Admin Gateway"}
+          </h1>
+
+          <p className="text-blue-100 text-sm mt-2">
+            {isRegistering
+              ? "Create admin account"
+              : "Authorized personnel only"}
           </p>
         </div>
 
-        <div className="p-8 pt-10">
+        {/* Form */}
+        <div className="p-8">
           <form onSubmit={handleAuth} className="space-y-5">
+
+            {/* Username */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                User ID / Username
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                  <User size={20} />
-                </div>
+              <label className="text-sm font-semibold">Username</label>
+              <div className="relative mt-2">
+                <User className="absolute left-3 top-3 text-gray-400" />
                 <input
-                  type="text"
+                  className="w-full pl-10 p-3 border rounded-xl"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#0b3b8f] focus:border-transparent transition-all outline-none"
-                  placeholder="admin"
                   required
                 />
               </div>
             </div>
 
+            {/* Password */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                  <Lock size={20} />
-                </div>
+              <label className="text-sm font-semibold">Password</label>
+              <div className="relative mt-2">
+                <Lock className="absolute left-3 top-3 text-gray-400" />
                 <input
                   type="password"
+                  className="w-full pl-10 p-3 border rounded-xl"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#0b3b8f] focus:border-transparent transition-all outline-none"
-                  placeholder="••••••••"
                   required
                 />
               </div>
             </div>
 
+            {/* Admin Key */}
             {isRegistering && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Local Admin Passkey <span className="text-red-500">*</span>
+              <div>
+                <label className="text-sm font-semibold text-red-600">
+                  Admin Passkey
                 </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-red-500">
-                    <Lock size={20} />
-                  </div>
-                  <input
-                    type="password"
-                    value={adminKey}
-                    onChange={(e) => setAdminKey(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 bg-red-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-600 focus:border-transparent transition-all outline-none"
-                    placeholder="Enter system master key"
-                    required={isRegistering}
-                  />
-                </div>
-              </motion.div>
+                <input
+                  type="password"
+                  className="w-full p-3 border rounded-xl mt-2 border-red-300"
+                  value={adminKey}
+                  onChange={(e) => setAdminKey(e.target.value)}
+                  required
+                />
+              </div>
             )}
 
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-[#0b3b8f] hover:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition-colors shadow-lg shadow-blue-900/20 disabled:opacity-70"
+              className="w-full bg-[#0b3b8f] text-white py-3 rounded-xl font-bold flex justify-center items-center gap-2"
             >
               {loading ? (
                 <>
-                  <Loader2 className="animate-spin" size={20} />
-                  {isRegistering ? "Registering..." : "Authenticating..."}
+                  <Loader2 className="animate-spin" size={18} />
+                  Processing...
                 </>
+              ) : isRegistering ? (
+                "Create Account"
               ) : (
-                isRegistering ? "Create Account" : "Secure Login"
+                "Login"
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm font-semibold">
-            <button 
-              type="button"
+          {/* Toggle */}
+          <div className="text-center mt-5">
+            <button
               onClick={() => setIsRegistering(!isRegistering)}
-              className="text-[#0b3b8f] hover:underline transition-all"
+              className="text-[#0b3b8f] font-semibold"
             >
-              {isRegistering ? "Already have an account? Sign In" : "Need access? Register here"}
+              {isRegistering
+                ? "Already have account? Login"
+                : "Need access? Register"}
             </button>
           </div>
 
-          <div className="mt-8 text-center text-xs text-slate-400 flex flex-col items-center gap-2">
-            <ShieldCheck size={18} className="text-[#0b3b8f]/50" />
-            <p>Secured by Knox.</p>
+          {/* Footer */}
+          <div className="mt-6 text-center text-xs text-gray-400 flex flex-col items-center">
+            <ShieldCheck size={16} />
+            Secured System
           </div>
         </div>
       </motion.div>
