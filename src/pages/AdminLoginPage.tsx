@@ -53,7 +53,6 @@ const AdminLoginPage = () => {
           setLoading(false);
           return;
         }
-
         // 1. Create Supabase Auth User
         const { data, error: signUpError } = await supabase.auth.signUp({
           email: username.trim(),
@@ -66,12 +65,11 @@ const AdminLoginPage = () => {
           return;
         }
 
-        // 2. Insert admin profile (NO PASSWORD STORED)
-        const { error: insertError } = await supabase.from("admins").insert([
+        // 2. Insert/update admin profile (NO PASSWORD STORED)
+        const { error: insertError } = await supabase.from("admins").upsert([
           {
             id: data.user.id,
             email: username.trim(),
-            username: username.trim(),
             admin_secret_key_used: adminKey,
             role: "admin",
           },

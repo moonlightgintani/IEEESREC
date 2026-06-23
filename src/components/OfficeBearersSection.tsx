@@ -383,7 +383,7 @@ const OfficeBearersSection = () => {
                     <div className="mb-16 flex flex-col items-center">
                         <div className="flex items-center justify-center w-full max-w-3xl gap-6 mb-8">
                             <div className="flex-1 h-px bg-gradient-to-r from-transparent to-slate-200"></div>
-                            <h3 className="text-2xl font-bold text-slate-900 tracking-tight text-center uppercase tracking-widest">{counsellorGroup.role}</h3>
+                            <h3 className="text-2xl font-bold text-slate-900 text-center uppercase tracking-widest">{counsellorGroup.role}</h3>
                             <div className="flex-1 h-px bg-gradient-to-l from-transparent to-slate-200"></div>
                         </div>
                         <div className="flex flex-wrap justify-center gap-6 w-full">
@@ -531,21 +531,23 @@ const OfficeBearersSection = () => {
 
                                 <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6">
                                     {sortedGroups.map(group => (
-                                        <div key={group.role} className="flex flex-col gap-3 break-inside-avoid mb-6 inline-block w-full">
-                                            <h4 className="text-[10px] font-bold tracking-widest uppercase text-slate-500 border-b border-slate-100 pb-1.5 pt-1">
-                                                {formatRoleDisplay(group.role)}
-                                            </h4>
-                                            <div className="space-y-2">
-                                                {group.members.map(member => (
-                                                    <div key={member.id} className="bg-slate-50 hover:bg-slate-100 rounded-lg p-3 border border-slate-200 transition-colors">
-                                                        <p className="text-sm font-semibold text-slate-800 leading-tight">{member.name}</p>
-                                                        {member.department && (
-                                                            <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">{member.department}</p>
-                                                        )}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
+                                         <div key={group.role} className="break-inside-avoid mb-6 inline-block w-full">
+                                             <div className="flex flex-col gap-3">
+                                                 <h4 className="text-[10px] font-bold tracking-widest uppercase text-slate-500 border-b border-slate-100 pb-1.5 pt-1">
+                                                     {formatRoleDisplay(group.role)}
+                                                 </h4>
+                                                 <div className="space-y-2">
+                                                     {group.members.map(member => (
+                                                         <div key={member.id} className="bg-slate-50 hover:bg-slate-100 rounded-lg p-3 border border-slate-200 transition-colors">
+                                                             <p className="text-sm font-semibold text-slate-800 leading-tight">{member.name}</p>
+                                                             {member.department && (
+                                                                 <p className="text-[11px] text-slate-500 font-medium mt-0.5 truncate">{member.department}</p>
+                                                             )}
+                                                         </div>
+                                                     ))}
+                                                 </div>
+                                             </div>
+                                         </div>
                                     ))}
                                 </div>
                             </div>
