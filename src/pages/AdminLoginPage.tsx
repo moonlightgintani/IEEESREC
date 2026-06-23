@@ -67,21 +67,7 @@ const AdminLoginPage = () => {
           return;
         }
 
-        // 2. Insert/update admin profile (NO PASSWORD STORED)
-        const { error: insertError } = await supabase.from("admins").upsert([
-          {
-            id: data.user.id,
-            email: emailInput,
-            admin_secret_key_used: adminKey,
-            role: "admin",
-          },
-        ]);
 
-        if (insertError) {
-          toast.error("Profile creation failed: " + insertError.message);
-          setLoading(false);
-          return;
-        }
 
         toast.success("Registration successful! You can now log in.");
         setIsRegistering(false);
