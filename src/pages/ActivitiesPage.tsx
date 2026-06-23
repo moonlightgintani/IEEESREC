@@ -41,7 +41,10 @@ const getValidImageUrl = (url?: string | null) => {
     return fallbackImage;
   }
   
-  if (target.startsWith("http://") || target.startsWith("https://")) {
+  if (target.startsWith("http://")) {
+    return "https://" + target.slice(7);
+  }
+  if (target.startsWith("https://")) {
     return target;
   }
   

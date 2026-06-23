@@ -18,8 +18,17 @@ const getAvatarFallback = (id: string | number) => {
 
 const getValidImageUrl = (url?: string | null) => {
     if (!url) return null;
-    if (url.startsWith("http")) return url;
-    const safePath = encodeURIComponent(url.trim());
+    const path = url.trim();
+    if (path.startsWith("http://")) {
+        return "https://" + path.slice(7);
+    }
+    if (path.startsWith("https://")) {
+        return path;
+    }
+    if (path.startsWith("http")) {
+        return path;
+    }
+    const safePath = encodeURIComponent(path);
     const { data } = supabase.storage.from("office_bearers").getPublicUrl(safePath);
     return data?.publicUrl;
 };

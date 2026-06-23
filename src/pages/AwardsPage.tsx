@@ -53,7 +53,15 @@ const heroVariants: Variants = {
 const getValidImageUrl = (url?: string | null) => {
     if (!url || !url.trim()) return "";
     const path = url.trim();
-    if (path.startsWith("http")) return path;
+    if (path.startsWith("http://")) {
+        return "https://" + path.slice(7);
+    }
+    if (path.startsWith("https://")) {
+        return path;
+    }
+    if (path.startsWith("http")) {
+        return path;
+    }
 
     const safePath = encodeURIComponent(path);
     const { data } = supabase.storage.from("activities").getPublicUrl(safePath);

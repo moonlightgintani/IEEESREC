@@ -26,9 +26,13 @@ const PWAInstallPrompt = () => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 3000);
+      
+      const isDismissed = localStorage.getItem("pwa-install-prompt-dismissed") === "true";
+      if (!isDismissed) {
+        setTimeout(() => {
+          setIsVisible(true);
+        }, 3000);
+      }
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -53,6 +57,7 @@ const PWAInstallPrompt = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
+    localStorage.setItem("pwa-install-prompt-dismissed", "true");
   };
 
   return (

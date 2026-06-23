@@ -33,8 +33,6 @@ const AdminLoginPage = () => {
     setLoading(true);
 
     try {
-      const email = `${username.trim().toLowerCase()}@ieeesrec.org`;
-
       if (isRegistering) {
         if (adminKey !== LOCAL_ADMIN_KEY) {
           toast.error("Invalid Admin Passkey. Registration blocked.");
@@ -42,38 +40,60 @@ const AdminLoginPage = () => {
           return;
         }
 
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
+        // Check if username already exists in admins table
+        const { data: existingUser, error: checkError } = await supabase
+          .from("admins")
+          .select("username")
+          .eq("username", username.trim())
+          .maybeSingle();
 
-        if (error) {
-          toast.error(error.message);
+        if (checkError) {
+          toast.error("Database connection error: " + checkError.message);
+          setLoading(false);
+          return;
+        }
+
+        if (existingUser) {
+          toast.error("Username already registered.");
+          setLoading(false);
+          return;
+        }
+
+        // Insert new admin to admins table
+        const { error: insertError } = await supabase
+          .from("admins")
+          .insert([{ username: username.trim(), password: password }]);
+
+        if (insertError) {
+          toast.error("Registration failed: " + insertError.message);
         } else {
           toast.success("Registration successful! You can now log in.");
           setIsRegistering(false);
         }
       } else {
-        // Local fallback for dev/testing
-        if (username.trim() === "admin" && password === "admin123") {
-          sessionStorage.setItem("admin_auth", "true");
-          toast.success("Logged in successfully (Local Dev Mode)");
-          navigate("/admin");
-          setLoading(false);
-          return;
-        }
+        // Query admins table for the username and password
+        const { data: adminUser, error: loginError } = await supabase
+          .from("admins")
+          .select("*")
+          .eq("username", username.trim())
+          .eq("password", password)
+          .maybeSingle();
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (error) {
-          toast.error(error.message);
-        } else if (data.session) {
+        if (loginError) {
+          toast.error("Database error during login: " + loginError.message);
+        } else if (adminUser) {
           sessionStorage.setItem("admin_auth", "true");
           toast.success("Logged in successfully");
           navigate("/admin");
+        } else {
+          // Allow fallback for default local admin credential
+          if (username.trim() === "admin" && password === "admin123") {
+            sessionStorage.setItem("admin_auth", "true");
+            toast.success("Logged in successfully (Local Dev Mode)");
+            navigate("/admin");
+          } else {
+            toast.error("Invalid username or password.");
+          }
         }
       }
     } catch (err) {

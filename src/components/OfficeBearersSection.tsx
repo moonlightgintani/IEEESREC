@@ -197,8 +197,17 @@ const OfficeBearersSection = () => {
     const dbUrl = person.image_url || person.photo || person.photo_url;
 
     if (dbUrl) {
-      if (dbUrl.startsWith("http")) return dbUrl;
-      const safePath = encodeURIComponent(dbUrl.trim());
+      const url = dbUrl.trim();
+      if (url.startsWith("http://")) {
+        return "https://" + url.slice(7);
+      }
+      if (url.startsWith("https://")) {
+        return url;
+      }
+      if (url.startsWith("http")) {
+        return url;
+      }
+      const safePath = encodeURIComponent(url);
       const { data } = supabase.storage.from("office_bearers").getPublicUrl(safePath);
       return data?.publicUrl;
     }

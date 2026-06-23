@@ -8,7 +8,10 @@ export function cn(...inputs: ClassValue[]) {
 
 export function resolveAssetUrl(url: string | null | undefined): string {
   if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
+  if (url.startsWith("http://")) {
+    return "https://" + url.slice(7);
+  }
+  if (url.startsWith("https://") || url.startsWith("data:")) {
     return url;
   }
   
