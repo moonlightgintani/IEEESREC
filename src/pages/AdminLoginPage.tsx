@@ -7,9 +7,9 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
 const AdminLoginPage = () => {
-  const [username, setUsername] = useState("admin");
-  const [password, setPassword] = useState("admin123");
-  const [adminKey, setAdminKey] = useState("MRBB2026");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [adminKey, setAdminKey] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
