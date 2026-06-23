@@ -44,6 +44,8 @@ const AdminLoginPage = () => {
     setLoading(true);
 
     try {
+      const emailInput = username.includes("@") ? username.trim() : `${username.trim()}@srec.ac.in`;
+
       // =========================
       // REGISTER
       // =========================
@@ -55,7 +57,7 @@ const AdminLoginPage = () => {
         }
         // 1. Create Supabase Auth User
         const { data, error: signUpError } = await supabase.auth.signUp({
-          email: username.trim(),
+          email: emailInput,
           password: password,
         });
 
@@ -69,7 +71,7 @@ const AdminLoginPage = () => {
         const { error: insertError } = await supabase.from("admins").upsert([
           {
             id: data.user.id,
-            email: username.trim(),
+            email: emailInput,
             admin_secret_key_used: adminKey,
             role: "admin",
           },
@@ -91,7 +93,7 @@ const AdminLoginPage = () => {
       else {
         const { error: loginError } =
           await supabase.auth.signInWithPassword({
-            email: username.trim(),
+            email: emailInput,
             password: password,
           });
 
@@ -158,13 +160,14 @@ const AdminLoginPage = () => {
         <div className="p-8">
           <form onSubmit={handleAuth} className="space-y-5">
 
-            {/* Username */}
+            {/* Username / Email */}
             <div>
-              <label className="text-sm font-semibold">Username</label>
+              <label className="text-sm font-semibold">Username / Email Address</label>
               <div className="relative mt-2">
                 <User className="absolute left-3 top-3 text-gray-400" />
                 <input
                   className="w-full pl-10 p-3 border rounded-xl"
+                  placeholder="e.g. admin or admin@srec.ac.in"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
