@@ -29,7 +29,6 @@ import AwardsPage from "./pages/AwardsPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ActivitiesPage from "./pages/ActivitiesPage.tsx";
 import AnnualPlansPage from "./pages/AnnualPlansPage.tsx";
-import Gallery from "./pages/Gallery.tsx";
 import FundingsPlanPage from "./pages/FundingsPlanPage.tsx";
 import SeniorMembersPage from "./pages/SeniorMembersPage.tsx";
 import TeamPage from "./pages/Team.tsx";
@@ -65,7 +64,6 @@ const App = () => {
             <Route path="/members" element={<PageTransition><MembersPage /></PageTransition>} />
             <Route path="/senior-members" element={<PageTransition><SeniorMembersPage /></PageTransition>} />
             <Route path="/awards" element={<PageTransition><AwardsPage /></PageTransition>} />
-            <Route path="/gallery" element={<PageTransition><Gallery /></PageTransition>} />
             <Route path="/reports" element={<PageTransition><ReportsPage /></PageTransition>} />
             <Route path="/annual-plans" element={<PageTransition><AnnualPlansPage /></PageTransition>} />
             <Route path="/funding" element={<PageTransition><FundingsPlanPage /></PageTransition>} />
