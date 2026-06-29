@@ -17,10 +17,12 @@ const navLinks = [
   { label: "Awards", href: "/awards" },
   { label: "Plans", href: "/annual-plans" },
   { label: "Gallery", href: import.meta.env.VITE_GALLERY_URL || "https://new-ieee.vercel.app/gallery" },
+  { label: "AECTSD", href: "https://aectsd.vercel.app/" },
   { label: "Reports", href: "/reports" },
   { label: "Funding", href: "/funding" },
   { label: "Contact", href: "/contact" },
   { label: "Admin", href: "/admin" },
+
 ];
 
 const Navbar = () => {
