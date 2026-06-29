@@ -30,7 +30,6 @@ import AwardsPage from "./pages/AwardsPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ActivitiesPage from "./pages/ActivitiesPage.tsx";
 import AnnualPlansPage from "./pages/AnnualPlansPage.tsx";
-import Gallery from "./pages/Gallery.tsx";
 import FundingsPlanPage from "./pages/FundingsPlanPage.tsx";
 import SeniorMembersPage from "./pages/SeniorMembersPage.tsx";
 import TeamPage from "./pages/Team.tsx";
@@ -64,7 +63,6 @@ const App = () => {
             <Route path="/members" element={<MembersPage />} />
             <Route path="/senior-members" element={<SeniorMembersPage />} />
             <Route path="/awards" element={<AwardsPage />} />
-            <Route path="/gallery" element={<Gallery />} />
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/annual-plans" element={<AnnualPlansPage />} />
             <Route path="/funding" element={<FundingsPlanPage />} />

@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Team", href: "/Team" },
   { label: "Awards", href: "/awards" },
   { label: "Plans", href: "/annual-plans" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "Gallery", href: import.meta.env.VITE_GALLERY_URL || "https://new-ieee.vercel.app/gallery" },
   { label: "Reports", href: "/reports" },
   { label: "Funding", href: "/funding" },
   { label: "Contact", href: "/contact" },
@@ -89,19 +89,36 @@ const Navbar = () => {
 
             {/* Bottom Row: Desktop Horizontal Nav Links - Blue Background */}
             <div className="hidden xl:flex items-center justify-center gap-x-8 gap-y-2 flex-wrap w-full bg-[#002855] py-4 px-4 transition-all duration-700 shadow-inner">
-               {navLinks.map((l, index) => (
-                  <MotionLink
-                     initial={{ opacity: 0, y: -10 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     transition={{ duration: 1.2, delay: 0.2 + (index * 0.05), ease: [0.16, 1, 0.3, 1] }}
-                     key={l.label}
-                     to={l.href}
-                     className="text-white/90 hover:text-white font-bold tracking-[0.3em] text-[11px] uppercase transition-all duration-500 relative group"
-                  >
-                     {l.label}
-                     <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] transition-all duration-500 group-hover:w-full bg-white"></span>
-                  </MotionLink>
-               ))}
+               {navLinks.map((l, index) => {
+                  const isExternal = l.href.startsWith("http://") || l.href.startsWith("https://");
+                  return isExternal ? (
+                     <motion.a
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2, delay: 0.2 + (index * 0.05), ease: [0.16, 1, 0.3, 1] }}
+                        key={l.label}
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white/90 hover:text-white font-bold tracking-[0.3em] text-[11px] uppercase transition-all duration-500 relative group"
+                     >
+                        {l.label}
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] transition-all duration-500 group-hover:w-full bg-white"></span>
+                     </motion.a>
+                  ) : (
+                     <MotionLink
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2, delay: 0.2 + (index * 0.05), ease: [0.16, 1, 0.3, 1] }}
+                        key={l.label}
+                        to={l.href}
+                        className="text-white/90 hover:text-white font-bold tracking-[0.3em] text-[11px] uppercase transition-all duration-500 relative group"
+                     >
+                        {l.label}
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[2px] transition-all duration-500 group-hover:w-full bg-white"></span>
+                     </MotionLink>
+                  );
+               })}
                <motion.a
                      initial={{ opacity: 0, y: -10 }}
                      animate={{ opacity: 1, y: 0 }}
@@ -138,19 +155,36 @@ const Navbar = () => {
                   </button>
                </div>
                <div className="flex flex-col items-center justify-center min-h-screen py-20 space-y-6">
-                  {navLinks.map((l, idx) => (
-                     <MotionLink
-                        key={l.label}
-                        to={l.href}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 + (idx * 0.05) }}
-                        onClick={() => setOpen(false)}
-                        className="text-black/80 text-xl tracking-[0.3em] uppercase font-medium hover:text-blue-600 transition-colors"
-                     >
-                        {l.label}
-                     </MotionLink>
-                  ))}
+                   {navLinks.map((l, idx) => {
+                      const isExternal = l.href.startsWith("http://") || l.href.startsWith("https://");
+                      return isExternal ? (
+                         <motion.a
+                            key={l.label}
+                            href={l.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 + (idx * 0.05) }}
+                            onClick={() => setOpen(false)}
+                            className="text-black/80 text-xl tracking-[0.3em] uppercase font-medium hover:text-blue-600 transition-colors"
+                         >
+                            {l.label}
+                         </motion.a>
+                      ) : (
+                         <MotionLink
+                            key={l.label}
+                            to={l.href}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 + (idx * 0.05) }}
+                            onClick={() => setOpen(false)}
+                            className="text-black/80 text-xl tracking-[0.3em] uppercase font-medium hover:text-blue-600 transition-colors"
+                         >
+                            {l.label}
+                         </MotionLink>
+                      );
+                   })}
                   <motion.a
                      href="https://vtools.vtools.ieee.org/" target="_blank"
                      initial={{ opacity: 0, y: 20 }}
